@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -60,6 +61,7 @@ public class UserServiceImpl implements UserService {
             image.setFileName(file.getOriginalFilename());
             image.setFileType(file.getContentType());
             image.setData(file.getBytes());
+            image.setImageId(userId+file.getOriginalFilename());
 
             user.getImages().add(image);
             userRepository.save(user);
@@ -78,7 +80,7 @@ public class UserServiceImpl implements UserService {
         List<Image> images = user.getImages();
 
         for (Image image : images) {
-            if (image.getUserId().equals(imageId)) {
+            if (image.getImageId().equals(imageId)) {
                 images.remove(image);
                 userRepository.save(user);
                 return;
